@@ -1,0 +1,16 @@
+{
+  "name": "drive-js",
+  "version": "0.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "googleapis": "^1.0.21",
+    "office365-js": "git+https://github.com/happy-tanuki/office365-js",
+    "openxml-js": "git+https://github.com/happy-tanuki/openxml-js"
+  },
+  "devDependencies": {}
+}
