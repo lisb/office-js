@@ -1,12 +1,12 @@
 {
   "name": "office-js",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "masataka.takeuchi@l-is-b.com",
+  "license": "MIT",
   "dependencies": {
     "googleapis": "^1.0.21",
     "office365-js": "git+https://github.com/happy-tanuki/office365-js",
