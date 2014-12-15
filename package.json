@@ -1,11 +1,14 @@
 {
   "name": "office-js",
   "version": "0.1.0",
+  "private": true,
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "masataka.takeuchi@l-is-b.com",
+  "keywords": ["office", "googleapps", "office365", "word", "excel"],
+  "description": "Utility for office cloud services.",
   "license": "MIT",
   "dependencies": {
     "googleapis": "^1.0.21",
