@@ -16,7 +16,7 @@
   "description": "Utility for office cloud services.",
   "license": "MIT",
   "dependencies": {
-    "googleapis": "^1.0.21",
+    "googleapis": "^99.0.0",
     "office365-js": "git+https://github.com/happy-tanuki/office365-js",
     "openxml-js": "git+https://github.com/happy-tanuki/openxml-js"
   },
