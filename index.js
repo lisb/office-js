@@ -1,10 +1,10 @@
 
 var props = {
-    'onedrive':  './onedrive',
-    'gdrive':    './googledrive',
-    'gcalendar': './googlecalendar',
-    'Word':      './word',
-    'Excel':     './excel'
+    "onedrive":  "./onedrive",
+    "gdrive":    "./googledrive",
+    "gcalendar": "./googlecalendar",
+    "Word":      "./word",
+    "Excel":     "./excel"
 };
 
 var index = {};

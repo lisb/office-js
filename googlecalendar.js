@@ -1,14 +1,14 @@
 
-var google = require('googleapis');
-var auth = require('./googleauth');
+var google = require("googleapis");
+var auth = require("./googleauth");
 
 module.exports = {
-    getClient: auth(google.calendar, 'v3', ['https://www.googleapis.com/auth/calendar'], Wrapper)
+    getClient: auth(google.calendar, "v3", ["https://www.googleapis.com/auth/calendar"], Wrapper)
 };
 
 function Wrapper(client) {
-  this.client = client;
-};
+    this.client = client;
+}
 
 Wrapper.prototype.quickAdd = function(id, text, cb) {
     this.client.events.quickAdd({

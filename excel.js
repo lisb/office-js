@@ -1,9 +1,4 @@
-var sys = require('sys');
-var fs	= require('fs');
-var vm	= require('vm');
-
-var Enumerable = require("openxml-js").Enumerable;
-var Ltxml   = require("openxml-js").Ltxml;
+var fs	= require("fs");
 var openXml = require("openxml-js").openXml;
 
 var S = openXml.S;
@@ -29,7 +24,7 @@ Editor.prototype.valueOfCell = function(cell) {
     return cell.element(S.v).value;
 };
 Editor.prototype.textOfCell = function(cell) {
-    if (this.typeOfCell(cell) !== 's') return "";
+    if (this.typeOfCell(cell) !== "s") return "";
     if (! this.strings) {
         var sharedStringTablePart = this.doc.workbookPart().sharedStringTablePart();
         var sst = sharedStringTablePart.getXDocument().root;

@@ -1,13 +1,12 @@
 // http://msdn.microsoft.com/en-us/office/office365/howto/common-file-tasks-client-library
 
-var fs = require('fs');
-var path = require('path');
+var fs = require("fs");
+var path = require("path");
 
 var o365 = require("office365-js");
 var O365Auth  = o365.O365Auth;
 var O365Discovery = o365.O365Discovery;
 var SharePointClient = o365.Microsoft.CoreServices.SharePointClient;
-var OutlookServicesClient = o365.Microsoft.OutlookServices.Client;
 var Folder = o365.Microsoft.FileServices.Folder;
 var File = o365.Microsoft.FileServices.File;
 var CommonAuthority = "https://login.windows.net/common";
@@ -18,62 +17,30 @@ O365Auth.Settings = {
     redirectUri: "http://localhost/"
 };
 
-/*
-var cb = function(err, response) {
-    console.log(err);
-    if (err && err.responseText) console.log(err.responseText);
-    console.log(response);
-};
-*/
-
-/* // mail task
-acquireToken(function(token) {
-    getClient(token, "Mail", OutlookServicesClient, function(client) {
-        getMyMails(client);
-    });
-});
-*/
-
-/* // calendar task
-acquireToken(function(token) {
-    getClient(token, "Calendar", OutlookServicesClient, function(client) {
-        getMyEvents(client);
-    });
-});
-*/
-
-/* // contacts task
-acquireToken(function(token) {
-    getClient(token, "Contacts", OutlookServicesClient, function(client) {
-        getMyContacts(client);
-    });
-});
-*/
-
 // sharepoint task
 module.exports = {
-  _client: null,
-  getClient: function(clientId, callback) {
-    if (typeof clientId == "string") {
-      O365Auth.Settings.clientId = clientId;
-    } else {
-      callback = clientId;
+    _client: null,
+    getClient: function(clientId, callback) {
+        if (typeof clientId == "string") {
+            O365Auth.Settings.clientId = clientId;
+        } else {
+            callback = clientId;
+        }
+        var self = this;
+        if (self._client)
+            callback(self._client);
+        else 
+            acquireToken(function(token) {
+                getClient(token, "MyFiles", SharePointClient, function(client) {
+                    callback(self._client = new Wrapper(client));
+                });
+            });
     }
-    var self = this;
-    if (self._client)
-      callback(self._client);
-    else 
-      acquireToken(function(token) {
-        getClient(token, "MyFiles", SharePointClient, function(client) {
-          callback(self._client = new Wrapper(client));
-        });
-     });
-  }
 };
 
 function Wrapper(client) {
-  this.client = client;
-};
+    this.client = client;
+}
 
 function acquireToken(callback) {
     console.log("[Auth] OAuth2 " + CommonAuthority);
@@ -122,26 +89,26 @@ Wrapper.prototype.downloadFile = function(fileId, filepath, callback) {
         console.log("[Files] saving to " + filepath);
         fs.writeFile(filepath, data, callback);
     }, callback);
-}
+};
 
 Wrapper.prototype.getFile = function(fileId, callback) {
     console.log("[Files] getFile: " + fileId);
     this.client.files.getItem(fileId).asFile().fetch().then(function (result) {
         callback(null, result);
     }, callback);
-}
+};
 
 Wrapper.prototype.getFolder = function(folderId, callback) {
     console.log("[Files] getFolder: " + folderId);
     this.client.files.getItem(folderId).asFolder().fetch().then(function (result) {
         callback(null, result);
     }, callback);
-}
+};
 
 Wrapper.prototype.getFiles = function(folderId, callback) {
     console.log("[Files] getFiles in folder: " + folderId);
     var parent;
-    if (typeof folderId === 'string') {
+    if (typeof folderId === "string") {
         parent = this.client.files.getItem(folderId).asFolder().children;
     } else {
         parent = this.client.files;
@@ -150,21 +117,21 @@ Wrapper.prototype.getFiles = function(folderId, callback) {
     parent.getItems().fetch().then(function (result) {
         callback(null, result.currentPage);
     }, callback);
-}
+};
 
 Wrapper.prototype.getFileByName = function(title, folderId, callback) {
     console.log("[Files] getFileByName: " + title);
     var parent;
-    if (typeof folderId === 'string') {
+    if (typeof folderId === "string") {
         parent = this.client.files.getItem(folderId).asFolder().children;
     } else {
         parent = this.client.files;
         callback = folderId;
     }
-    parent.getByPath('/' + title).then(function (result) {
+    parent.getByPath("/" + title).then(function (result) {
         callback(null, result);
     }, callback);
-}
+};
 
 Wrapper.prototype.searchFile = function(query, callback) {
     console.log("[Files] searchFile: query = " + JSON.stringify(query));
@@ -184,7 +151,7 @@ Wrapper.prototype.searchFile = function(query, callback) {
             callback("Not found", null);
         }
     });
-}
+};
 
 Wrapper.prototype.createFolder = function(title, callback) {
     console.log("[Files] createFolder: " + title);
@@ -193,18 +160,18 @@ Wrapper.prototype.createFolder = function(title, callback) {
     this.client.files.addItem(folder).then(function (item) {
         callback(null, item);
     }, callback);
-}
+};
 
 Wrapper.prototype.createFile = function(title, folderId, callback) {
     console.log("[Files] createFile: " + title);
     var file = new File(this.client.context);
     file.name = title;
-    if (typeof folderId == 'function') { callback = folderId; folderId = null; }
+    if (typeof folderId == "function") { callback = folderId; folderId = null; }
     var parent = folderId ? this.client.files.getItem(folderId).asFolder().children : this.client.files;
     parent.addItem(file).then(function (item) {
         callback(null, item);
     });
-}
+};
 
 Wrapper.prototype.uploadContent = function(filepath, fileId, etag, callback) {
     console.log("[Files] uploadContent: " + filepath);
@@ -218,12 +185,12 @@ Wrapper.prototype.uploadContent = function(filepath, fileId, etag, callback) {
             }, callback);
         }
     });
-}
+};
 
 Wrapper.prototype.uploadOfficeFile = function(filepath, fileId, etag, callback) {
     console.log("[Files] uploadFile: " + filepath);
     var wrapper = this;
-    if (typeof(fileId) == 'function') {
+    if (typeof(fileId) == "function") {
         // create
         callback = fileId;
         wrapper.createFile(path.basename(filepath), function(err, item) {
@@ -234,17 +201,4 @@ Wrapper.prototype.uploadOfficeFile = function(filepath, fileId, etag, callback) 
         // upload
         wrapper.uploadContent(filepath, fileId, etag, callback);
     }
-}
-
-function getMyEvents(client) {
-    console.log("[Event] getMyEvents");
-    client.me.calendar.events.getEvents().fetch()
-            .then(function (events) {
-                var myevents = events.currentPage;
-                console.log("[Event] Success");
-                console.log(myevents);
-            }, function (reason) {
-                console.log("[Event] Failure");
-                console.log(reason);
-            });
-}
+};
