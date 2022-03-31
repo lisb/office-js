@@ -6,7 +6,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "masataka.takeuchi@l-is-b.com",
-  "keywords": ["office", "googleapps", "office365", "word", "excel"],
+  "keywords": [
+    "office",
+    "googleapps",
+    "office365",
+    "word",
+    "excel"
+  ],
   "description": "Utility for office cloud services.",
   "license": "MIT",
   "dependencies": {
@@ -14,5 +20,7 @@
     "office365-js": "git+https://github.com/happy-tanuki/office365-js",
     "openxml-js": "git+https://github.com/happy-tanuki/openxml-js"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^8.12.0"
+  }
 }
