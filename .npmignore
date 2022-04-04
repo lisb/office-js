@@ -2,6 +2,7 @@ node_modules
 *~
 *.docx
 *.xlsx
+*-test.js
 
 # TODO: submodules?
 office365-js

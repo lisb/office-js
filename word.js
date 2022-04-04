@@ -1,6 +1,4 @@
-var fs	= require('fs');
-
-var Enumerable = require("openxml-js").Enumerable;
+var fs	= require("fs");
 var Ltxml   = require("openxml-js").Ltxml;
 var openXml = require("openxml-js").openXml;
 
