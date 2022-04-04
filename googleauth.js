@@ -27,7 +27,7 @@ function loadStoredToken() {
             return JSON.parse(fs.readFileSync(TOKEN_STORE, "utf8"));
         }
     } catch (err) {
-        console.info(err);
+        console.warn(err);
     }
     return null;
 }
